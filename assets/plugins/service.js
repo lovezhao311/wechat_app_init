@@ -1,5 +1,4 @@
 import Tools from '../../utils/tools'
-import es6 from 'es6-promise'
 
 class service {
   constructor() {
@@ -39,7 +38,7 @@ class service {
           if (that.noPromiseMethods.indexOf(method) !== -1 || method.substr(0, 2) === 'on' || /\w+Sync$/.test(method)) {
             return wx[method](...Array.from(arguments))
           }
-          return that.__getPromise(es6.Promise, that.__getResolver(that.__defaultRequest, [method, ...Array.from(arguments)], that))
+          return that.__getPromise(Promise, that.__getResolver(that.__defaultRequest, [method, ...Array.from(arguments)], that))
         }
       })
     }
@@ -51,7 +50,7 @@ class service {
 		 */
     that.navigateTo = (url, params) => {
       const $$url = that.tools.buildUrl(url, params)
-      return new es6.Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         wx.navigateTo({
           url: $$url,
           success: res => resolve(res),
@@ -67,7 +66,7 @@ class service {
    */
     that.redirectTo = (url, params) => {
       const $$url = that.tools.buildUrl(url, params)
-      return new es6.Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         wx.redirectTo({
           url: $$url,
           success: res => resolve(res),
